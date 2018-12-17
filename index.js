@@ -4,6 +4,32 @@ const fs = require("fs");
 const liveServer = require("live-server");
 const inquirer = require("inquirer");
 const moment = require("moment");
+const _ = require("lodash");
+const fuzzy = require("fuzzy");
+
+inquirer.registerPrompt(
+  "autocomplete",
+  require("inquirer-autocomplete-prompt")
+);
+
+var beneficiaryList = fs
+  .readFileSync("beneficiaries.txt")
+  .toString()
+  .split("\n");
+
+function searchBenef(answers, input) {
+  input = input || "";
+  return new Promise(function(resolve) {
+    setTimeout(function() {
+      var fuzzyResult = fuzzy.filter(input, beneficiaryList);
+      resolve(
+        fuzzyResult.map(function(el) {
+          return el.original;
+        })
+      );
+    }, _.random(30, 500));
+  });
+}
 
 var file = new Date().valueOf();
 var params = {
@@ -33,9 +59,11 @@ var questions = [
     filter: Number
   },
   {
-    type: "input",
+    type: "autocomplete",
+    suggestOnly: true,
     name: "beneficiary",
-    message: "Beneficiary"
+    message: "Beneficiary",
+    source: searchBenef
   },
   {
     type: "input",
