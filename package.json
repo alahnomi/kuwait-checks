@@ -1,0 +1,17 @@
+{
+  "name": "kuwait-checks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^6.2.1",
+    "live-server": "^1.2.1",
+    "moment": "^2.23.0",
+    "pdfkit": "^0.8.3"
+  }
+}
