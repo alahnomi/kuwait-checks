@@ -70,6 +70,12 @@ var questions = [
     name: "date",
     message: "Date",
     default: moment().format("l")
+  },
+  {
+    type: "list",
+    name: "bank",
+    message: "Bank",
+    choices: ["ABK", "NBK"]
   }
 ];
 
@@ -85,18 +91,19 @@ inquirer.prompt(questions).then(answers => {
     beneficiary = beneficiary.split(" ");
 
     doc.pipe(fs.createWriteStream("output.pdf"));
+
     doc
       .font("./fonts/Cairo/Cairo-SemiBold.ttf")
       .fontSize(10)
-      .text(beneficiary.reverse().join(" "), 76, 260, {
+      .text(beneficiary.reverse().join(" "), 65, 260, {
         align: "center",
-        width: 240
+        width: 382
       });
 
     doc
       .font("./fonts/Cairo/Cairo-SemiBold.ttf")
       .fontSize(10)
-      .text(amount.reverse().join(" "), 76, 289, {
+      .text(amount.reverse().join(" "), 76, 280, {
         align: "center",
         width: 240
       });
@@ -104,7 +111,7 @@ inquirer.prompt(questions).then(answers => {
     doc
       .font("./fonts/Cairo/Cairo-SemiBold.ttf")
       .fontSize(12)
-      .text("# " + answers.amount + " #", 374, 309, {
+      .text("# " + answers.amount + " #", 374, 295, {
         align: "center",
         width: 113
       });
@@ -112,10 +119,43 @@ inquirer.prompt(questions).then(answers => {
     doc
       .font("./fonts/Cairo/Cairo-SemiBold.ttf")
       .fontSize(10)
-      .text(answers.date, 394, 260, {
+      .text(answers.date, 394, 230, {
         align: "center",
         width: 70
       });
+
+    // doc
+    //   .font("./fonts/Cairo/Cairo-SemiBold.ttf")
+    //   .fontSize(10)
+    //   .text(beneficiary.reverse().join(" "), 76, 260, {
+    //     align: "center",
+    //     width: 240
+    //   });
+
+    // doc
+    //   .font("./fonts/Cairo/Cairo-SemiBold.ttf")
+    //   .fontSize(10)
+    //   .text(amount.reverse().join(" "), 76, 289, {
+    //     align: "center",
+    //     width: 240
+    //   });
+
+    // doc
+    //   .font("./fonts/Cairo/Cairo-SemiBold.ttf")
+    //   .fontSize(12)
+    //   .text("# " + answers.amount + " #", 374, 309, {
+    //     align: "center",
+    //     width: 113
+    //   });
+
+    // doc
+    //   .font("./fonts/Cairo/Cairo-SemiBold.ttf")
+    //   .fontSize(10)
+    //   .text(answers.date, 394, 260, {
+    //     align: "center",
+    //     width: 70
+    //   });
+
     await doc.end();
   }
 
